@@ -38,7 +38,8 @@ jobs:
               uses: actions/upload-artifact@v3
               with:
                   name: production-build
-                  path: ./dist
+                  path: ./build/dist
+                  if-no-files-found: error
 
     deploy:
         name: Deploy to gh-pages test-stand
@@ -52,9 +53,10 @@ jobs:
               with:
                   name: production-build
                   path: ./dist
+                  if-no-files-found: error
 
             - name: Deploy to gh pages
               uses: peaceiris/actions-gh-pages@v3
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
-                  publish_dir: ./dist
+                  publish_dir: ./build/dist
