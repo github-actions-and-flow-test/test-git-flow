@@ -15,9 +15,12 @@ const config: webpack.Configuration = {
 		path: path.join(__dirname, 'dist'),
 		clean: true,
 	},
+	resolve: {
+		extensions: ['.ts', '.js', '.jsx', '.tsx'],
+	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			title: 'Solid APP!',
+			title: 'create facebook clone function.console.prototype.Math.log.pow!',
 			template: './public/index.html'
 		}),
 		new ForkTsCheckerWebpackPlugin({
