@@ -34,12 +34,13 @@ jobs:
               with:
                   cmd: build
 
-            - run: echo ./dist
+            - run:
+                  ls
 
             - name: Upload artifact
               uses: actions/upload-artifact@v3
               with:
-                  name: my-artifact
+                  name: production-build
                   path: ./dist
                   if-no-files-found: error
 
@@ -60,7 +61,7 @@ jobs:
 
             - name: Log
               run:
-                  echo ./dist
+                  ls
 
             # - name: Download artifact
             #   uses: actions/upload-artifact@v3
