@@ -14,9 +14,15 @@ jobs:
         name: Build and Test
         runs-on: ubuntu-latest
         steps:
+            - name: log var
+              run: echo $BRANCH_NAME
+
             - name: Specify branch name
               run: |
                 BRANCH_NAME=$(BRANCH_NAME | sed -r 's/[/]+/-/g')
+
+            - name: log var after regexp
+              run: echo $BRANCH_NAME
 
             - name: Checkout repo
               uses: actions/checkout@v3
@@ -60,6 +66,9 @@ jobs:
                    name: production-build
                    path: .
                    if-no-files-found: error
+
+            - name: log var
+              run: echo $BRANCH_NAME
 
             - name: Deploy to gh pages
               uses: peaceiris/actions-gh-pages@v3
