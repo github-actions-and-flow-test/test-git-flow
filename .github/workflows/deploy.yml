@@ -6,6 +6,9 @@ on:
             - '**'        # matches every branch
             # - '!main'
 
+env:
+    BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+
 jobs:
     build:
         name: Build and Test
@@ -40,8 +43,10 @@ jobs:
                   name: production-build
                   path: ./dist
                   if-no-files-found: error
-
+    # echo "feat/ISC-7/test/gay" | sed -r 's/[/]+/-/g'
     deploy:
+        env:
+
         name: Deploy to gh-pages test-stand
         needs: build
         runs-on: ubuntu-latest
@@ -63,4 +68,4 @@ jobs:
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: .
-                  destination_dir: ${GITHUB_REF##*/}
+                  destination_dir: echo $BRANCH_NAME | sed -r 's/[/]+/-/g'  # "$BRANCH_NAME | sed -r 's/[/]+/-/g'"
