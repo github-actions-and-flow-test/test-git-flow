@@ -19,7 +19,7 @@ jobs:
 
             - name: Specify branch name
               run: |
-                BRANCH_NAME=$(BRANCH_NAME | sed -r 's/[/]+/-/g')
+                BRANCH_NAME=${BRANCH_NAME | sed -r 's/[/]+/-/g'}
 
             - name: log var after regexp
               run: echo $BRANCH_NAME
