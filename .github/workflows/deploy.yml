@@ -45,8 +45,6 @@ jobs:
                   if-no-files-found: error
     # echo "feat/ISC-7/test/gay" | sed -r 's/[/]+/-/g'
     deploy:
-        env:
-
         name: Deploy to gh-pages test-stand
         needs: build
         runs-on: ubuntu-latest
