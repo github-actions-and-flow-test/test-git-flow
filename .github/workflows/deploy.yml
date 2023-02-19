@@ -34,12 +34,21 @@ jobs:
               with:
                   cmd: build
 
-            - name: Upload build
+            - run: echo ./dist
+
+            - name: Upload artifact
               uses: actions/upload-artifact@v3
               with:
-                  name: production-build
+                  name: my-artifact
                   path: ./dist
                   if-no-files-found: error
+
+            # - name: Upload build
+            #   uses: actions/upload-artifact@v3
+            #   with:
+            #       name: production-build
+            #       path: ./dist
+            #       if-no-files-found: error
 
     deploy:
         name: Deploy to gh-pages test-stand
@@ -48,9 +57,11 @@ jobs:
         # if: github.ref == 'refs/heads/main'
 
         steps:
-            #- name: Log
-            #  run:
-            #      ls
+
+            - name: Log
+              run:
+                  echo ./dist
+
             # - name: Download artifact
             #   uses: actions/upload-artifact@v3
             #   with:
