@@ -35,7 +35,7 @@ jobs:
                   cmd: build
 
             - run:
-                  echo ls -R
+                  ls -a
 
             - name: Upload artifact
               uses: actions/upload-artifact@v3
@@ -61,7 +61,7 @@ jobs:
 
             - name: Log
               run:
-                  echo ls -R
+                  ls -a
 
             # - name: Download artifact
             #   uses: actions/upload-artifact@v3
