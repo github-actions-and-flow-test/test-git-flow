@@ -6,8 +6,6 @@ on:
             - '**'        # matches every branch
             # - '!main'
 
-env:
-    BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
 jobs:
     build:
@@ -18,8 +16,13 @@ jobs:
               run: echo $BRANCH_NAME
 
             - name: Specify branch name
+              env:
+                  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+
               run: |
-                BRANCH_NAME=${BRANCH_NAME | sed -r 's/[/]+/-/g'}
+                RAW_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
+                BRANCH_NAME=${RAW_BRANCH_NAME | sed -r 's/[/]+/-/g'}
+                echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
             - name: log var after regexp
               run: echo $BRANCH_NAME
