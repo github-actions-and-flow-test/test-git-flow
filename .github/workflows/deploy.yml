@@ -16,12 +16,8 @@ concurrency:
 jobs:
     build:
         name: Build and Test
-        # if: ${{ github.event_name == 'push' || github.event.pull_request.merged == true }} awdawdawd
         runs-on: ubuntu-latest
         steps:
-            - name: check
-              run: echo ${{ env.BRANCH_NAME }}
-
             - name: Checkout repo
               uses: actions/checkout@v3
 
@@ -71,8 +67,8 @@ jobs:
               id: destinationFolder
               with:
                   cond: ${{ github.ref == 'refs/heads/main' }}
-                  if_true: '.'  # string value
-                  if_false: ${{ env.BRANCH_NAME }} # string value
+                  if_true: '.'
+                  if_false: ${{ env.BRANCH_NAME }}
 
             - name: Deploy to github pages
               uses: peaceiris/actions-gh-pages@v3
@@ -81,23 +77,3 @@ jobs:
                   publish_dir: .
                   destination_dir: ${{ steps.destinationFolder.outputs.value }}
                   publish_branch: staging
-
-            #- name: Deploy to root
-            #  uses: peaceiris/actions-gh-pages@v3
-            #  # if: ${{ github.ref == 'refs/heads/main' }}
-            #  with:
-            #      github_token: ${{ secrets.GITHUB_TOKEN }}
-            #      publish_dir: .
-            #      destination_dir: .
-            #      publish_branch: staging
-
-
-
-
-            #- name: Deploy to folder
-            #  uses: peaceiris/actions-gh-pages@v3
-            #  with:
-            #      github_token: ${{ secrets.GITHUB_TOKEN }}
-            #      publish_dir: .
-            #      destination_dir: ${{ env.BRANCH_NAME }}
-            #      publish_branch: staging
