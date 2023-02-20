@@ -6,15 +6,17 @@ on:
             - '**'        # matches every branch
             # - '!main'
 
+# env:
+#     BRANCH_NAME: ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g'
+
 jobs:
     build:
         name: Build and Test
         runs-on: ubuntu-latest
         steps:
-            - name: log before anything
+            - name: specify branch name
               run:
-                  export DEST_DIR=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')
-                  #echo ${{ env.BRANCH_NAME }}
+                  echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
             #- name: Specify branch name
               # RAW_TOXENV="py${{ matrix.python }}-django${{ matrix.django }}"
               # TOXENV=$(echo $RAW_TOXENV | sed 's/\.//')
@@ -31,7 +33,7 @@ jobs:
                 #echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
             - name: log var after regexp
-              run: ${{ env.DEST_DIR }} # works fine
+              run: echo ${{ env.BRANCH_NAME }} # works fine
 
             - name: Checkout repo
               uses: actions/checkout@v3
@@ -69,11 +71,6 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-
-            - name: log var after regexp
-              run: ${{ env.DEST_DIR }} # works fine
-
-
             - name: Download artifact
               uses: actions/download-artifact@master
               with:
