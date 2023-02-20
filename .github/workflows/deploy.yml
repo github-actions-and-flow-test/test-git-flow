@@ -19,6 +19,9 @@ jobs:
         # if: ${{ github.event_name == 'push' || github.event.pull_request.merged == true }} awdawdawd
         runs-on: ubuntu-latest
         steps:
+            - name: check
+              run: echo ${{ env.BRANCH_NAME }}
+
             - name: Checkout repo
               uses: actions/checkout@v3
 
@@ -50,7 +53,7 @@ jobs:
                   if-no-files-found: error
 
     deploy:
-        name: Deploy to gh-pages test-stand
+        name: Deploy to staging
         needs: build
         runs-on: ubuntu-latest
         steps:
@@ -63,9 +66,38 @@ jobs:
             - name: Specify branch name
               run: echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
 
-            - name: Deploy to gh pages
+            - name: Define destination folder
+              uses: haya14busa/action-cond@v1
+              id: destinationFolder
+              with:
+                  cond: ${{ github.ref == 'refs/heads/main' }}
+                  if_true: '.'  # string value
+                  if_false: ${{ env.BRANCH_NAME }} # string value
+
+            - name: Deploy to github pages
               uses: peaceiris/actions-gh-pages@v3
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: .
-                  destination_dir: ${{ env.BRANCH_NAME }}
+                  destination_dir: ${{ steps.destinationFolder.outputs.value }}
+                  publish_branch: staging
+
+            #- name: Deploy to root
+            #  uses: peaceiris/actions-gh-pages@v3
+            #  # if: ${{ github.ref == 'refs/heads/main' }}
+            #  with:
+            #      github_token: ${{ secrets.GITHUB_TOKEN }}
+            #      publish_dir: .
+            #      destination_dir: .
+            #      publish_branch: staging
+
+
+
+
+            #- name: Deploy to folder
+            #  uses: peaceiris/actions-gh-pages@v3
+            #  with:
+            #      github_token: ${{ secrets.GITHUB_TOKEN }}
+            #      publish_dir: .
+            #      destination_dir: ${{ env.BRANCH_NAME }}
+            #      publish_branch: staging
