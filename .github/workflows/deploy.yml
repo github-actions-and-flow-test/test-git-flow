@@ -103,6 +103,8 @@ jobs:
                  ls -a
                  cd ../
                  ls -a
+                 cd ../
+                 ls -a
 
             #- name: Optional - delete folder after merge
             #  id: deleteFolder
