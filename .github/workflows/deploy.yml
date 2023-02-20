@@ -24,7 +24,7 @@ jobs:
             -   name: Get Branch
                 run: |
                     raw=${{ github.head_ref }}
-                    branch=${raw/origin\/}
+
                     echo "Branch is $raw"
 
             - name: Setup Node
@@ -63,7 +63,7 @@ jobs:
             -   name: Get Branch
                 run: |
                     raw=${{ github.head_ref }}
-                    branch=${raw/origin\/}
+
                     echo "Branch is $raw"
 
             - name: Check
@@ -100,7 +100,7 @@ jobs:
 
     clean:
         name: Delete folder after deploy
-        # if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         needs: deploy
         runs-on: ubuntu-latest
         steps:
@@ -109,11 +109,14 @@ jobs:
               with:
                   ref: staging
 
+            -   uses: tonynguyenit18/github-action-custom-vars@v1
+            -   name: "merge branch"
+                id: merge_branch
+                run: echo "::set-output name=merge_branch::$RECENT_MERGED_BRANCH_NAME"
+
             -   name: Get Branch
                 run: |
-                    raw=${{ github.head_ref }}
-                    branch=${raw/origin\/}
-                    echo "Branch is $raw"
+                    echo ${{ steps.merge_branch.outputs.merge_branch }}
 
             - name: Check
               run: ls -a
@@ -130,10 +133,10 @@ jobs:
             - name: Check
               run: ls -a
 
-            # - name: commit success
-            #   run: |
-            #       git config --global user.email "email@gmail.com"
-            #       git config --global user.name "github actions"
-            #       git add .
-            #       git commit -m "chore: clean repo"
-            #       git push
+            - name: commit success
+              run: |
+                  git config --global user.email "email@gmail.com"
+                  git config --global user.name "github actions"
+                  git add .
+                  git commit -m "chore: clean repo"
+                  git push
