@@ -23,11 +23,7 @@ jobs:
             #  # if: ${{ (github.event.pull_request.merged == true) && (github.ref == 'refs/heads/main') }}
             #  run: echo "merged, and we are in main!"
 
-            -   name: Get Branch
-                run: |
-                    raw=$(git branch -r --contains ${{ github.ref }})
-                    branch=${raw/origin\/}
-                    echo "Branch is $branch"
+
 
             - name: lets see
               run: |
@@ -39,8 +35,14 @@ jobs:
             - name: Checkout repo
               uses: actions/checkout@v3
 
-            -   name: source branch name
-                run: echo ${{ github.head_ref }}
+            - name: Get Branch
+              run: |
+                  raw=$(git branch -r --contains ${{ github.ref }})
+                  branch=${raw/origin\/}
+                  echo "Branch is $branch"
+
+            - name: source branch name
+              run: echo ${{ github.head_ref }}
 
             - name: Setup Node
               uses: actions/setup-node@v3
@@ -77,6 +79,7 @@ jobs:
         steps:
             -   name: source branch name
                 run: echo ${{ github.head_ref }}
+
             - name: Check
               run: ls -a
 
