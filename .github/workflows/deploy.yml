@@ -1,0 +1,72 @@
+name: Build and Deploy to gh-pages.
+
+on:
+
+    # push:
+    #     branches:
+    #         - '**'        # matches every branch
+    pull_request:
+        branches:
+            - '**'
+    # merge_group:
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    build:
+        name: Build and Test
+        # if: ${{ github.event_name == 'push' || github.event.pull_request.merged == true }} awdawdawd
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
+            - name: Setup Node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 14.19.1
+
+            - name: Install deps
+              uses: borales/actions-yarn@v4
+              with:
+                  cmd: install
+
+            - name: Run units
+              uses: borales/actions-yarn@v4
+              with:
+                  cmd: test
+
+            - name: Build production bundle
+              uses: borales/actions-yarn@v4
+              with:
+                  cmd: build
+
+            - name: Upload artifact
+              uses: actions/upload-artifact@v3
+              with:
+                  name: production-build
+                  path: ./dist
+                  if-no-files-found: error
+
+    deploy:
+        name: Deploy to gh-pages test-stand
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Download artifact
+              uses: actions/download-artifact@master
+              with:
+                   name: production-build
+                   path: .
+
+            - name: Specify branch name
+              run: echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
+
+            - name: Deploy to gh pages
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: .
+                  destination_dir: ${{ env.BRANCH_NAME }}

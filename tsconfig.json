@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./",
+        "target": "ES5",
+        "module": "CommonJS",
+        "newLine": "LF",
+        "moduleResolution": "node",
+        "jsx": "react-jsx",
+        "sourceMap": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "allowSyntheticDefaultImports": true,
+        "types": ["jest", "node", "@types/jest"]
+    },
+    "exclude": ["node_modules"]
+}
