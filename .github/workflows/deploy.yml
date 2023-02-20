@@ -6,8 +6,8 @@ on:
             - '**'        # matches every branch
             # - '!main'
 
-# env:
-#    BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+env:
+   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
 jobs:
     build:
@@ -22,10 +22,13 @@ jobs:
               # RAW_TOXENV="py${{ matrix.python }}-django${{ matrix.django }}"
               # TOXENV=$(echo $RAW_TOXENV | sed 's/\.//')
               # echo "TOXENV=$TOXENV" >> $GITHUB_ENV
+
+              # echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
               run:
-                RAW_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
-                BRANCH_NAME=$(RAW_BRANCH_NAME | sed -r 's/[/]+/-/g')
-                echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+                echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g') >> $GITHUB_ENV"
+                #RAW_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
+                #BRANCH_NAME=$(RAW_BRANCH_NAME | sed -r 's/[/]+/-/g')
+                #echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
             - name: log var after regexp
               run: echo ${{ env.BRANCH_NAME }}
