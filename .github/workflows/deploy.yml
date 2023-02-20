@@ -24,7 +24,8 @@ jobs:
             #  run: echo "merged, and we are in main!"
 
             - name: lets see
-              run: echo ${{ github.event.pull_request.merged }}
+              run: |
+                echo ${{ github.event.pull_request.merged }}
 
             - name: lets see another
               run: echo ${{ github.ref }}
@@ -62,6 +63,7 @@ jobs:
     deploy:
         name: Deploy to staging
         needs: build
+
         runs-on: ubuntu-latest
         steps:
             - name: Check
@@ -108,7 +110,7 @@ jobs:
                   ref: staging
 
             - name: Specify branch name
-              run: echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
+              run: echo "BRANCH_NAME=$(echo ${{ github.head_ref }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
 
             - name: delete merged build folder
               run: rm -rf ${{ env.BRANCH_NAME }}
