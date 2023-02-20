@@ -24,7 +24,6 @@ jobs:
             #  run: echo "merged, and we are in main!"
 
             - name: lets see
-
               run: echo ${{ github.event.pull_request.merged }}
 
             - name: lets see another

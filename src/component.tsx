@@ -20,6 +20,7 @@ export const App = () => {
 			</button>
 			<a href='./../'>go up?? IDK HELP ME !!! PLS HALP help me.. help..</a>
 			<p>I beg you..</p>
+			<p>I beg you.. x2</p>
 		</div>
 	)
 }
