@@ -6,9 +6,6 @@ on:
             - '**'        # matches every branch
             # - '!main'
 
-#env:
-#   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
-
 jobs:
     build:
         name: Build and Test
@@ -22,7 +19,6 @@ jobs:
               # RAW_TOXENV="py${{ matrix.python }}-django${{ matrix.django }}"
               # TOXENV=$(echo $RAW_TOXENV | sed 's/\.//')
               # echo "TOXENV=$TOXENV" >> $GITHUB_ENV
-
               # echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
               run:
                   echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
@@ -63,7 +59,7 @@ jobs:
                   name: production-build
                   path: ./dist
                   if-no-files-found: error
-    # echo "feat/ISC-7/test/gay" | sed -r 's/[/]+/-/g'
+
     deploy:
         name: Deploy to gh-pages test-stand
         needs: build
@@ -75,10 +71,9 @@ jobs:
               with:
                    name: production-build
                    path: .
-                   # if-no-files-found: error
 
             - name: log var
-              run: echo $BRANCH_NAME
+              run: echo ${{ env.BRANCH_NAME }}
 
             - name: Deploy to gh pages
               uses: peaceiris/actions-gh-pages@v3
