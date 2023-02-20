@@ -18,6 +18,11 @@ jobs:
         name: Build and Test
         runs-on: ubuntu-latest
         steps:
+            # if: ${{ (github.event.pull_request.merged == true) && (contains(github.event.pull_request.labels.*.name, 'site')) }}
+            - name: check
+              if: ${{ (github.event.pull_request.merged == true) && (github.ref == 'refs/heads/main') }}
+              run: echo "merged, and we are in main!"
+
             - name: Checkout repo
               uses: actions/checkout@v3
 
@@ -78,3 +83,4 @@ jobs:
                   destination_dir: ${{ steps.destinationFolder.outputs.value }}
                   publish_branch: staging
                   keep_files: true
+
