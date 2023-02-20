@@ -118,7 +118,7 @@ jobs:
               run: echo ${{ env.BRANCH_NAME }}
 
             - name: delete merged build folder
-              run: rm -f ${{ env.BRANCH_NAME }}
+              run: rm -rf ${{ env.BRANCH_NAME }}
 
             - name: commit success
               run: |
