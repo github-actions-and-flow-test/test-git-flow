@@ -21,11 +21,11 @@ jobs:
             - name: Checkout repo
               uses: actions/checkout@v3
 
-            - name: Get Branch
-              run: |
-                raw=$(git branch -r --contains ${{ github.head_ref }})
-                branch=${raw/origin\/}
-                echo "Branch is $branch"
+            # - name: Get Branch
+            #   run: |
+            #     raw=$(git branch -r --contains ${{ github.head_ref }})
+            #     branch=${raw/origin\/}
+            #     echo "Branch is $branch"
 
             - name: Setup Node
               uses: actions/setup-node@v3
