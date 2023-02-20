@@ -6,8 +6,8 @@ on:
             - '**'        # matches every branch
             # - '!main'
 
-env:
-   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+#env:
+#   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
 jobs:
     build:
