@@ -23,6 +23,12 @@ jobs:
               if: ${{ (github.event.pull_request.merged == true) && (github.ref == 'refs/heads/main') }}
               run: echo "merged, and we are in main!"
 
+            - name: lets see
+              run: echo ${{ github.event.pull_request.merged }}
+
+            - name: lets see another
+              run: echo ${{ github.ref }}
+
             - name: Checkout repo
               uses: actions/checkout@v3
 

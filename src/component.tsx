@@ -18,7 +18,7 @@ export const App = () => {
 				change theme lol gay arthur dfg
 				Почему, блять? !!! TEST! hello!!! BUILD ME AND DEPLOY
 			</button>
-			<a href='./../'>go up?? IDK HELP ME !!! PLS HALP</a>
+			<a href='./../'>go up?? IDK HELP ME !!! PLS HALP help me..</a>
 		</div>
 	)
 }
