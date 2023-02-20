@@ -25,7 +25,7 @@ jobs:
                 run: |
                     raw=${{ github.head_ref }}
                     branch=${raw/origin\/}
-                    echo "Branch is %raw"
+                    echo "Branch is $raw"
 
             - name: Setup Node
               uses: actions/setup-node@v3
@@ -64,7 +64,7 @@ jobs:
                 run: |
                     raw=${{ github.head_ref }}
                     branch=${raw/origin\/}
-                    echo "Branch is %raw"
+                    echo "Branch is $raw"
 
             - name: Check
               run: ls -a
@@ -113,7 +113,7 @@ jobs:
                 run: |
                     raw=${{ github.head_ref }}
                     branch=${raw/origin\/}
-                    echo "Branch is %raw"
+                    echo "Branch is $raw"
 
             - name: Check
               run: ls -a
