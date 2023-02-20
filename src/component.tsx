@@ -34,7 +34,7 @@ export const App = () => {
 			<p>I hope</p>
 
 
-			блять я ебал сука
+			<p>peace</p>
 
 		</div>
 	)
