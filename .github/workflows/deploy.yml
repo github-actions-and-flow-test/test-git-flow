@@ -26,6 +26,9 @@ jobs:
                  GITHUB_CONTEXT: ${{ toJSON(github) }}
               run: echo "$GITHUB_CONTEXT"
 
+            - name: Show event path
+              run: echo $GITHUB_EVENT_PATH
+
             -   name: Print info
                 run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
 
