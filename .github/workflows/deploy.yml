@@ -28,7 +28,7 @@ jobs:
 
             - name: Show event path
               env:
-                  GITHUB_EV_PATH: ${{ toJSON($(echo $GITHUB_EVENT_PATH)) }}
+                  GITHUB_EV_PATH: ${{ toJSON(echo $GITHUB_EVENT_PATH) }}
               run: echo GITHUB_EV_PATH
 
             -   name: Print info
