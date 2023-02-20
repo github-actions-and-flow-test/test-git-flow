@@ -19,13 +19,13 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             # if: ${{ (github.event.pull_request.merged == true) && (contains(github.event.pull_request.labels.*.name, 'site')) }}
-            - name: check
-              if: ${{ (github.event.pull_request.merged == true) && (github.ref == 'refs/heads/main') }}
-              run: echo "merged, and we are in main!"
+            #- name: check
+            #  # if: ${{ (github.event.pull_request.merged == true) && (github.ref == 'refs/heads/main') }}
+            #  run: echo "merged, and we are in main!"
 
             - name: lets see
 
-              run: echo github.event.pull_request.merged
+              run: echo ${{ echo ${{ github.event.pull_request.merged }} }}
 
             - name: lets see another
               run: echo ${{ github.ref }}
@@ -65,6 +65,9 @@ jobs:
         needs: build
         runs-on: ubuntu-latest
         steps:
+            - name: Check
+              run: ls -a
+
             - name: Download artifact
               uses: actions/download-artifact@master
               with:
@@ -91,3 +94,8 @@ jobs:
                   publish_branch: staging
                   keep_files: true
 
+            #- name: Optional - delete folder after merge
+            #  id: deleteFolder
+            #  if: github.ref == 'refs/heads/main'
+            #  run: | rm -f \
+            #      .github/
