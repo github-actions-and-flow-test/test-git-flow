@@ -11,24 +11,23 @@ jobs:
         name: Build and Test
         runs-on: ubuntu-latest
         steps:
-            - name: log var
-              run: echo $BRANCH_NAME
-
             - name: Specify branch name
-
               # RAW_TOXENV="py${{ matrix.python }}-django${{ matrix.django }}"
               # TOXENV=$(echo $RAW_TOXENV | sed 's/\.//')
               # echo "TOXENV=$TOXENV" >> $GITHUB_ENV
               # echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+              # feat/ISC-7
+              # repository.github.io/feat-ISC-7
               run:
-                  echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
+                  #echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
+                export BRANCH_NAME = echo $BRANCH_NAME | sed -r 's/[/]+/-/g'
                 #echo "BRANCH_NAME=$(echo {{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g') >> $GITHUB_ENV"
                 #RAW_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
                 #BRANCH_NAME=$(RAW_BRANCH_NAME | sed -r 's/[/]+/-/g')
                 #echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
             - name: log var after regexp
-              run: echo ${{ env.BRANCH_NAME }}
+              run: echo ${{ env.BRANCH_NAME }} # works fine
 
             - name: Checkout repo
               uses: actions/checkout@v3
@@ -73,7 +72,7 @@ jobs:
                    path: .
 
             - name: log var
-              run: echo ${{ env.BRANCH_NAME }}
+              run: echo ${{ env.BRANCH_NAME }} # nothing here!
 
             - name: Deploy to gh pages
               uses: peaceiris/actions-gh-pages@v3
