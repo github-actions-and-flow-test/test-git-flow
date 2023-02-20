@@ -17,7 +17,7 @@ concurrency:
 jobs:
     build:
         name: Build and Test
-        # if: ${{ github.event_name == 'push' || github.event.pull_request.merged == true }}
+        # if: ${{ github.event_name == 'push' || github.event.pull_request.merged == true }} awdawdawd
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repo
