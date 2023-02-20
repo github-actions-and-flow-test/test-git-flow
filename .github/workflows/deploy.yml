@@ -25,7 +25,7 @@ jobs:
 
             - name: lets see
 
-              run: echo ${{ github.event.pull_request.merged }}
+              run: echo github.event.pull_request.merged
 
             - name: lets see another
               run: echo ${{ github.ref }}
