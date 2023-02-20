@@ -77,4 +77,4 @@ jobs:
                   publish_dir: .
                   destination_dir: ${{ steps.destinationFolder.outputs.value }}
                   publish_branch: staging
-                  keep_files: true
+                  # keep_files: true
