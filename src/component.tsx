@@ -11,6 +11,7 @@ export const App = () => {
 	return (
 		<div style={{ background: theme, width: '100%', fontSize: 25, color: 'red', height: '100vh' }}>
 			{ theme === 'black' && 'black' }
+			come on im gonna work im sure
 			<button
 				data-test-id='button'
 				onClick={colorHandler}
