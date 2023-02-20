@@ -100,7 +100,7 @@ jobs:
 
     clean:
         name: Delete folder after deploy
-        if: github.ref == 'refs/heads/main'
+        # if: github.ref == 'refs/heads/main'
         needs: deploy
         runs-on: ubuntu-latest
         steps:
@@ -115,16 +115,19 @@ jobs:
             - name: Specify branch name
               run: echo "BRANCH_NAME=$(echo ${{ github.head_ref }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
 
+            - name: branch name
+              run: echo ${{ github.head_ref }}
+
             - name: delete merged build folder
               run: rm -rf ${{ env.BRANCH_NAME }}
 
             - name: Check
               run: ls -a
 
-            - name: commit success
-              run: |
-                  git config --global user.email "email@gmail.com"
-                  git config --global user.name "github actions"
-                  git add .
-                  git commit -m "chore: clean repo"
-                  git push
+            # - name: commit success
+            #   run: |
+            #       git config --global user.email "email@gmail.com"
+            #       git config --global user.name "github actions"
+            #       git add .
+            #       git commit -m "chore: clean repo"
+            #       git push
