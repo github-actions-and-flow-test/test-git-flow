@@ -15,7 +15,7 @@ export const App = () => {
 				data-test-id='button'
 				onClick={colorHandler}
 			>
-				change theme lol gay arthur
+				change theme lol gay arthur dfg
 			</button>
 		</div>
 	)
