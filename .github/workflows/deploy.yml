@@ -25,7 +25,7 @@ jobs:
 
               # echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
               run:
-                echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g') >> $GITHUB_ENV"
+                echo "BRANCH_NAME=$(echo ${ github.head_ref || github.ref_name } | sed -r 's/[/]+/-/g') >> $GITHUB_ENV"
                 #RAW_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
                 #BRANCH_NAME=$(RAW_BRANCH_NAME | sed -r 's/[/]+/-/g')
                 #echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
@@ -74,7 +74,7 @@ jobs:
               with:
                    name: production-build
                    path: .
-                   if-no-files-found: error
+                   # if-no-files-found: error
 
             - name: log var
               run: echo $BRANCH_NAME
