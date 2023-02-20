@@ -21,11 +21,8 @@ jobs:
             - name: Checkout repo
               uses: actions/checkout@v3
 
-            -   name: Get Branch
-                run: |
-                    raw=${{ github.head_ref }}
-
-                    echo "Branch is $raw"
+            -   name: Print info
+                run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
 
             - name: Setup Node
               uses: actions/setup-node@v3
@@ -60,11 +57,8 @@ jobs:
 
         runs-on: ubuntu-latest
         steps:
-            -   name: Get Branch
-                run: |
-                    raw=${{ github.head_ref }}
-
-                    echo "Branch is $raw"
+            -   name: Print info
+                run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
 
             - name: Check
               run: ls -a
@@ -109,17 +103,11 @@ jobs:
               with:
                   ref: staging
 
-            -   uses: tonynguyenit18/github-action-custom-vars@v1
-            -   name: "merge branch"
-                id: merge_branch
-                run: echo "::set-output name=merge_branch::$RECENT_MERGED_BRANCH_NAME"
-
-            -   name: Get Branch
-                run: |
-                    echo ${{ steps.merge_branch.outputs.merge_branch }}
-
             - name: Check
               run: ls -a
+
+            - name: Print info
+              run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
 
             - name: Specify branch name
               run: echo "BRANCH_NAME=$(echo ${{ github.head_ref }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
