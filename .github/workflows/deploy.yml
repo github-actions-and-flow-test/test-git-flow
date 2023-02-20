@@ -85,6 +85,10 @@ jobs:
                   if_true: '.'
                   if_false: ${{ env.BRANCH_NAME }}
 
+            - name: Check
+              run: ls -a
+
+
             - name: Deploy to github pages
               uses: peaceiris/actions-gh-pages@v3
               with:
@@ -93,6 +97,9 @@ jobs:
                   destination_dir: ${{ steps.destinationFolder.outputs.value }}
                   publish_branch: staging
                   keep_files: true
+
+            - name: Check
+              run: ls -a
 
             #- name: Optional - delete folder after merge
             #  id: deleteFolder
