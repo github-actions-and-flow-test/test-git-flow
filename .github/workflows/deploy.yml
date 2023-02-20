@@ -98,15 +98,8 @@ jobs:
                   publish_branch: staging
                   keep_files: true
 
-            - name: Check
-              run: |
-                 ls -a
-                 cd ../
-                 ls -a
-                 cd ../
-                 ls -a
     clean:
-        name: Remove folder after deploy
+        name: Delete folder after deploy
         needs: deploy
         runs-on: ubuntu-latest
         steps:
@@ -114,13 +107,13 @@ jobs:
               uses: actions/checkout@v3
               with:
                   ref: staging
+
             - name: check what inside
               run: ls -a
 
+            - name: log env
+              run: echo ${{ env.BRANCH_NAME }}
 
+            #- name: delete merged build folder
+            #  run: rm -f
 
-            #- name: Optional - delete folder after merge
-            #  id: deleteFolder
-            #  if: github.ref == 'refs/heads/main'
-            #  run: | rm -f \
-            #      .github/
