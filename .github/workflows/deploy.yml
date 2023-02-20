@@ -24,7 +24,8 @@ jobs:
               run: echo "merged, and we are in main!"
 
             - name: lets see
-              run: echo ${{ github.event.pull_request.merged }}
+              if: github.event.pull_request.merged == true
+              run: echo 'merged!'
 
             - name: lets see another
               run: echo ${{ github.ref }}
