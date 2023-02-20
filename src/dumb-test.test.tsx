@@ -14,5 +14,6 @@ describe('app', () => {
 		expect(await screen.queryByText('black')).not.toBeInTheDocument()
 
 		expect(true).toBeTruthy()
+		expect(true).toBeTruthy()
 	})
 });
