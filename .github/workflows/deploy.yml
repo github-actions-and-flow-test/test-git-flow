@@ -112,7 +112,8 @@ jobs:
         steps:
             - name: Checkout repo
               uses: actions/checkout@v3
-
+              with:
+                  ref: staging
             - name: check what inside
               run: ls -a
 
