@@ -1,14 +1,13 @@
 name: Build and Deploy to gh-pages.
 
 on:
+    push:
+        branches:
+            - 'main'
 
-    # push:
-    #     branches:
-    #         - '**'        # matches every branch
     pull_request:
         branches:
             - '**'
-    # merge_group:
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
