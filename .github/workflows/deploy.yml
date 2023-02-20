@@ -18,27 +18,14 @@ jobs:
         name: Build and Test
         runs-on: ubuntu-latest
         steps:
-            # if: ${{ (github.event.pull_request.merged == true) && (contains(github.event.pull_request.labels.*.name, 'site')) }}
-            #- name: check
-            #  # if: ${{ (github.event.pull_request.merged == true) && (github.ref == 'refs/heads/main') }}
-            #  run: echo "merged, and we are in main!"
-
-
-
-            - name: lets see
-              run: |
-                echo ${{ github.event.pull_request.merged }}
-
-            - name: lets see another
-              run: echo ${{ github.ref }}
-
             - name: Checkout repo
               uses: actions/checkout@v3
 
-
-
-            - name: source branch name
-              run: echo ${{ github.head_ref }}
+            - name: Get Branch
+              run: |
+                raw=$(git branch -r --contains ${{ github.head_ref }})
+                branch=${raw/origin\/}
+                echo "Branch is $branch"
 
             - name: Setup Node
               uses: actions/setup-node@v3
@@ -73,8 +60,11 @@ jobs:
 
         runs-on: ubuntu-latest
         steps:
-            -   name: source branch name
-                run: echo ${{ github.head_ref }}
+            -   name: Get Branch
+                run: |
+                    raw=$(git branch -r --contains ${{ github.head_ref }})
+                    branch=${raw/origin\/}
+                    echo "Branch is $branch"
 
             - name: Check
               run: ls -a
