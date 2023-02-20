@@ -12,5 +12,7 @@ describe('app', () => {
 		await userEvent.click(await screen.findByTestId('button'))
 
 		expect(await screen.queryByText('black')).not.toBeInTheDocument()
+
+		expect(true).toBeTruthy()
 	})
 });
