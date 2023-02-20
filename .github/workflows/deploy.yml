@@ -6,11 +6,17 @@ on:
             - '**'        # matches every branch
             # - '!main'
 
+env:
+    BRANCH_NAME: echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g'
+
 jobs:
     build:
         name: Build and Test
         runs-on: ubuntu-latest
         steps:
+            - name: log before anything
+              run:
+                  echo ${{ env.BRANCH_NAME }}
             - name: Specify branch name
               # RAW_TOXENV="py${{ matrix.python }}-django${{ matrix.django }}"
               # TOXENV=$(echo $RAW_TOXENV | sed 's/\.//')
@@ -19,8 +25,8 @@ jobs:
               # feat/ISC-7
               # repository.github.io/feat-ISC-7
               run:
-                  #echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
-                  export DEST_DIR=echo $BRANCH_NAME | sed -r 's/[/]+/-/g'
+                  echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
+                  # export DEST_DIR=echo $BRANCH_NAME | sed -r 's/[/]+/-/g'
 
                 #RAW_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
                 #BRANCH_NAME=$(RAW_BRANCH_NAME | sed -r 's/[/]+/-/g')
@@ -72,11 +78,11 @@ jobs:
                    path: .
 
             - name: log var
-              run: echo ${{ env.DEST_DIR }} # nothing here!
+              run: echo ${{ env.BRANCH_NAME }} # nothing here!
 
             - name: Deploy to gh pages
               uses: peaceiris/actions-gh-pages@v3
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: .
-                  destination_dir: ${{ env.DEST_DIR }}
+                  destination_dir: ${{ env.BRANCH_NAME }}
