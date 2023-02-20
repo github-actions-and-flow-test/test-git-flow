@@ -20,14 +20,14 @@ jobs:
               # repository.github.io/feat-ISC-7
               run:
                   #echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
-                export BRANCH_NAME = echo $BRANCH_NAME | sed -r 's/[/]+/-/g'
-                #echo "BRANCH_NAME=$(echo {{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g') >> $GITHUB_ENV"
+                  export DEST_DIR=echo $BRANCH_NAME | sed -r 's/[/]+/-/g'
+
                 #RAW_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
                 #BRANCH_NAME=$(RAW_BRANCH_NAME | sed -r 's/[/]+/-/g')
                 #echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
             - name: log var after regexp
-              run: echo ${{ env.BRANCH_NAME }} # works fine
+              run: echo ${{ env.DEST_DIR }} # works fine
 
             - name: Checkout repo
               uses: actions/checkout@v3
@@ -72,11 +72,11 @@ jobs:
                    path: .
 
             - name: log var
-              run: echo ${{ env.BRANCH_NAME }} # nothing here!
+              run: echo ${{ env.DEST_DIR }} # nothing here!
 
             - name: Deploy to gh pages
               uses: peaceiris/actions-gh-pages@v3
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: .
-                  destination_dir: ${{ env.BRANCH_NAME }}
+                  destination_dir: ${{ env.DEST_DIR }}
