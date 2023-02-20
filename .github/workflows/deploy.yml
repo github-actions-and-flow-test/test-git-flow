@@ -23,8 +23,11 @@ jobs:
             #  # if: ${{ (github.event.pull_request.merged == true) && (github.ref == 'refs/heads/main') }}
             #  run: echo "merged, and we are in main!"
 
-            - name: source branch name
-              run: echo ${{ github.head_ref }}
+            -   name: Get Branch
+                run: |
+                    raw=$(git branch -r --contains ${{ github.ref }})
+                    branch=${raw/origin\/}
+                    echo $branch
 
             - name: lets see
               run: |
