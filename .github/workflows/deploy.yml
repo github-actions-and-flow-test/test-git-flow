@@ -109,11 +109,17 @@ jobs:
               with:
                   ref: staging
 
+            - name: Check
+              run: ls -a
+
             - name: Specify branch name
               run: echo "BRANCH_NAME=$(echo ${{ github.head_ref }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
 
             - name: delete merged build folder
               run: rm -rf ${{ env.BRANCH_NAME }}
+
+            - name: Check
+              run: ls -a
 
             - name: commit success
               run: |
