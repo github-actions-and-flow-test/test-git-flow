@@ -108,12 +108,23 @@ jobs:
               with:
                   ref: staging
 
+            - name: Specify branch name
+              run: echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
+
             - name: check what inside
               run: ls -a
 
             - name: log env
               run: echo ${{ env.BRANCH_NAME }}
 
-            #- name: delete merged build folder
-            #  run: rm -f
+            - name: delete merged build folder
+              run: rm -f ${{ env.BRANCH_NAME }}
+
+            - name: commit success
+              run: |
+                  git config --global user.email "email@gmail.com"
+                  git config --global user.name "github actions"
+                  git add .
+                  git commit -m "chore: clean repo"
+                  git push
 
