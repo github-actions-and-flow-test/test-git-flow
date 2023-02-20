@@ -16,7 +16,7 @@ export const App = () => {
 				onClick={colorHandler}
 			>
 				change theme lol gay arthur dfg
-				Почему, блять? !!! TEST!
+				Почему, блять? !!! TEST! hello!!! BUILD ME AND DEPLOY
 			</button>
 		</div>
 	)
