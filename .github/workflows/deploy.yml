@@ -7,7 +7,7 @@ on:
             # - '!main'
 
 env:
-    BRANCH_NAME: echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g'
+    BRANCH_NAME: ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g'
 
 jobs:
     build:
