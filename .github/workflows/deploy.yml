@@ -121,7 +121,7 @@ jobs:
 
             - name: Get Branch
               run: |
-                  raw=$(git branch -r --contains ${{ github.ref }})
+                  raw=$(git branch -r --contains ${{ github.head_ref }})
                   branch=${raw/origin\/}
                   echo "Branch is $branch"
 
