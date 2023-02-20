@@ -23,6 +23,9 @@ jobs:
             #  # if: ${{ (github.event.pull_request.merged == true) && (github.ref == 'refs/heads/main') }}
             #  run: echo "merged, and we are in main!"
 
+            - name: source branch name
+              run: echo ${{ github.head_ref }}
+
             - name: lets see
               run: |
                 echo ${{ github.event.pull_request.merged }}
@@ -32,6 +35,9 @@ jobs:
 
             - name: Checkout repo
               uses: actions/checkout@v3
+
+            -   name: source branch name
+                run: echo ${{ github.head_ref }}
 
             - name: Setup Node
               uses: actions/setup-node@v3
@@ -66,6 +72,8 @@ jobs:
 
         runs-on: ubuntu-latest
         steps:
+            -   name: source branch name
+                run: echo ${{ github.head_ref }}
             - name: Check
               run: ls -a
 
