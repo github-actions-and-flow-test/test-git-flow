@@ -1,12 +1,14 @@
 name: Build and Deploy to gh-pages.
 
 on:
-    push:
-        branches:
-            - '**'        # matches every branch
+
+    # push:
+    #     branches:
+    #         - '**'        # matches every branch
     pull_request:
         branches:
             - '**'
+    # merge_group:
 
 jobs:
     build:
