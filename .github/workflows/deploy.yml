@@ -35,6 +35,10 @@ jobs:
 
 # ${var//[[:blank:]]/}
             # commit_message=${{ toJSON(github.event.head_commit.message) }}
+            -   name: Dump GitHub context
+                env:
+                    GITHUB_CONTEXT: ${{ toJSON(github) }}
+                run: echo "$GITHUB_CONTEXT"
             - name: Define branch name
               run: |
                   commit_message=${{ github.event.head_commit.message }}
@@ -46,10 +50,7 @@ jobs:
             - name: test
               run: echo "$BRANCH_NAME"
 
-            - name: Dump GitHub context
-              env:
-                 GITHUB_CONTEXT: ${{ toJSON(github) }}
-              run: echo "$GITHUB_CONTEXT"
+
 
             -   name: Print info
                 run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
