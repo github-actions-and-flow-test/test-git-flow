@@ -39,6 +39,10 @@ jobs:
                 env:
                     GITHUB_CONTEXT: ${{ toJSON(github) }}
                 run: echo "$GITHUB_CONTEXT"
+
+            -  name: show me commit from json
+               run: echo ${{ fromJSON(github.event.head_commit.message) }}
+
             - name: Define branch name
               run: |
                   commit_message=${{ fromJSON(github.event.head_commit.message) }}
