@@ -31,11 +31,15 @@ jobs:
             # branch=${$commit_msg#*github-actions-and-flow-test/}
             # echo "BRANCH_NAME=$branch" >> $GITHUB_ENV
 
+
+
+# ${var//[[:blank:]]/}
+            # commit_message=${{ toJSON(github.event.head_commit.message) }}
             - name: Define branch name
               run: |
-                  commit_message=${{ toJSON(github.event.head_commit.message) }}
-                  echo ${{ fromJSON(commit_message) }}
-                  branch_name=${commit_message#*github-actions-and-flow-test/}
+                  commit_message=${{ github.event.head_commit.message }}
+                  commit_message_without_spaces=${commit_message//[[:blank:]]/}
+                  branch_name=${commit_message_without_spaces#*github-actions-and-flow-test/}
                   echo "BRANCH_NAME=$(echo "$branch_name")" >> $GITHUB_ENV
                  
 
