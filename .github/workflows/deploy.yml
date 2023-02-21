@@ -21,6 +21,10 @@ jobs:
             - name: Checkout repo
               uses: actions/checkout@v3
                 #run: echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
+
+            - name: Check commit msg
+              run: echo ${{ github.event.head_commit.message }}
+
             - name: Define branch name
               run: echo "BRANCH_NAME=$(echo $(${{ github.event.head_commit.message }}#*github-actions-and-flow-test/))" >> $GITHUB_ENV # github-actions-and-flow-test
                   # commit_msg=${{ github.event.head_commit.message }}
