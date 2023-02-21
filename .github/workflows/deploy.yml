@@ -35,7 +35,7 @@ jobs:
               run: |
                   commit_message={{ github.event.head_commit.message }}
                   branch_name={commit_message#*github-actions-and-flow-test/}
-                  echo "BRANCH_NAME=$branch_name" >> $GITHUB_ENV 
+                  echo "BRANCH_NAME='$branch_name'" >> $GITHUB_ENV 
                  
 
             - name: test
