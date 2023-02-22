@@ -40,16 +40,15 @@ jobs:
                     GITHUB_CONTEXT: ${{ toJSON(github) }}
                 run: echo "$GITHUB_CONTEXT"
 
-            -  name: show me commit from json
-               run: echo ${{ fromJSON(github.event.head_commit.message) }}
+            # commit_message_without_spaces=${commit_message//[[:blank:]]/}
+            # commit_message="Merge pull request #50 from github/wow/sleshi/testint-this\n\nhelloвапвап";
+            # echo $(sed -rn 's%^.*github\/([A\-z\/\-]+)\\n\\n.*$%\1%p'<<<"$commit_message")
 
             - name: Define branch name
               run: |
-                  commit_message=${{ fromJSON(github.event.head_commit.message) }}
-                  commit_message_without_spaces=${commit_message//[[:blank:]]/}
-                  branch_name=${commit_message_without_spaces#*github-actions-and-flow-test/}
-                  echo "BRANCH_NAME=$(echo "$branch_name")" >> $GITHUB_ENV
-                 
+                  commit_message=${{ github.event.head_commit.message }}
+                  branch_name=$(sed -rn 's%^.*github\/([A\-z\/\-]+)\\n\\n.*$%\1%p'<<<"$commit_message")
+                  echo "BRANCH_NAME=$(echo "branch_name")" >> $GITHUB_ENV
 
             - name: test
               run: echo "$BRANCH_NAME"
