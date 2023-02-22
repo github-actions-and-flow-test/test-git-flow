@@ -20,92 +20,6 @@ jobs:
         steps:
             - name: Checkout repo
               uses: actions/checkout@v3
-                #run: echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
-
-            # - name: Check commit msg
-            #   run: echo ${{ github.event.head_commit.message }}
-            # string='Merge pull request #37 from github-actions-and-flow-test/testing-this'
-            #
-            # echo "BRANCH_NAME=$(echo ${string#*github-actions-and-flow-test/})" #>> $GITHUB_ENV
-            # commit_msg=${{ github.event.head_commit.message }}
-            # branch=${$commit_msg#*github-actions-and-flow-test/}
-            # echo "BRANCH_NAME=$branch" >> $GITHUB_ENV
-
-
-
-# ${var//[[:blank:]]/}
-            # commit_message=${{ toJSON(github.event.head_commit.message) }}
-            -   name: Dump GitHub context
-                env:
-                    GITHUB_CONTEXT: ${{ toJSON(github) }}
-                run: echo "$GITHUB_CONTEXT"
-
-            # commit_message_without_spaces=${commit_message//[[:blank:]]/}
-            # commit_message="Merge pull request #50 from github/wow/sleshi/testint-this\n\nhelloвапвап";
-            # echo $(sed -rn 's%^.*github\/([A\-z\/\-]+)\\n\\n.*$%\1%p'<<<"$commit_message")
-            # ${{ github.event.head_commit.message }}
-
-            #   branch_name=$(sed -rn 's%^.*github\/([A\-z\/\-]+)\\n\\n.*$%\1%p'<<< "${{ github.event.head_commit.message }}")
-            #   echo "BRANCH_NAME=$(echo "$branch_name")" >> $GITHUB_ENV
-
-
-            # formatted_commit=$(echo "Merge pull request #50 from github/wow/sleshi/testint-this\n\nhelloвапвап" | sed -E ':a;N;$!ba;s/\r{0,1}\n/\_UNIQUE_CHAR_/g')
-            # github-actions-and-flow-test
-            - name: Define branch name
-              run: |
-                  formatted_commit=$(echo "${{ github.event.head_commit.message }}" | sed -E ':a;N;$!ba;s/\r{0,1}\n/\_UNIQUE_CHAR_/g')
-                  branch_name=$(sed -rn 's%^.*${{ github.repository_owner }}\/([A\-z\/\-]+)_UNIQUE_CHAR_.*$%\1%p'<<<"$formatted_commit")
-                  echo "BRANCH_NAME=$(echo "$branch_name")" >> $GITHUB_ENV
-                  
-                  
-
-            - name: with colons
-              run: echo "$BRANCH_NAME"
-
-            - name: without colons
-              run: echo $BRANCH_NAME
-
-
-
-            -   name: Print info
-                run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
-
-            - name: lol
-              run: echo "${GITHUB_REF#refs/heads/}"
-
-            - uses: FranzDiebold/github-env-vars-action@v2
-            - name: Print environment variables
-              run: |
-                  echo "CI_REPOSITORY_SLUG=$CI_REPOSITORY_SLUG"
-                  echo "CI_REPOSITORY_OWNER=$CI_REPOSITORY_OWNER"
-                  echo "CI_REPOSITORY_OWNER_SLUG=$CI_REPOSITORY_OWNER_SLUG"
-                  echo "CI_REPOSITORY_NAME=$CI_REPOSITORY_NAME"
-                  echo "CI_REPOSITORY_NAME_SLUG=$CI_REPOSITORY_NAME_SLUG"
-                  echo "CI_REPOSITORY=$CI_REPOSITORY"
-                  echo "CI_REF_SLUG=$CI_REF_SLUG"
-                  echo "CI_ACTION_REF_NAME=$CI_ACTION_REF_NAME"
-                  echo "CI_ACTION_REF_NAME_SLUG=$CI_ACTION_REF_NAME_SLUG"
-                  echo "CI_REF_NAME=$CI_REF_NAME"
-                  echo "CI_REF_NAME_SLUG=$CI_REF_NAME_SLUG"
-                  echo "CI_REF=$CI_REF"
-                  echo "CI_HEAD_REF_SLUG=$CI_HEAD_REF_SLUG"
-                  echo "CI_HEAD_REF=$CI_HEAD_REF"
-                  echo "CI_BASE_REF_SLUG=$CI_BASE_REF_SLUG"
-                  echo "CI_BASE_REF=$CI_BASE_REF"
-                  echo "CI_SHA_SHORT=$CI_SHA_SHORT"
-                  echo "CI_SHA=$CI_SHA"
-                  echo "CI_PR_SHA_SHORT=$CI_PR_SHA_SHORT"
-                  echo "CI_PR_SHA=$CI_PR_SHA"
-                  echo "CI_PR_NUMBER=$CI_PR_NUMBER"
-                  echo "CI_PR_ID=$CI_PR_ID"
-                  echo "CI_PR_TITLE=$CI_PR_TITLE"
-                  echo "CI_PR_DESCRIPTION=$CI_PR_DESCRIPTION"
-                  echo "CI_ACTOR=$CI_ACTOR"
-                  echo "CI_EVENT_NAME=$CI_EVENT_NAME"
-                  echo "CI_RUN_ID=$CI_RUN_ID"
-                  echo "CI_RUN_NUMBER=$CI_RUN_NUMBER"
-                  echo "CI_WORKFLOW=$CI_WORKFLOW"
-                  echo "CI_ACTION=$CI_ACTION"
 
             - name: Setup Node
               uses: actions/setup-node@v3
@@ -140,11 +54,6 @@ jobs:
 
         runs-on: ubuntu-latest
         steps:
-            # -   name: Print info
-            #     run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
-
-            # - name: Check
-            #   run: ls -a
 
             - name: Download artifact
               uses: actions/download-artifact@master
@@ -154,17 +63,6 @@ jobs:
 
             - name: Specify branch name
               run: echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
-# sed 's/.*Modeline //'
-            # -   name: Setup Environment (PR)
-            #     if: ${{ github.event_name == 'pull_request' }}
-            #     shell: bash
-            #     run: |
-            #         echo "LAST_COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> ${GITHUB_ENV}
-            # -   name: Setup Environment (Push)
-            #     if: ${{ github.event_name == 'push' }}
-            #     shell: bash
-            #     run: |
-            #         echo "LAST_COMMIT_SHA=${GITHUB_SHA}" >> ${GITHUB_ENV}
 
             - name: Define destination folder
               uses: haya14busa/action-cond@v1
@@ -182,7 +80,7 @@ jobs:
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: .
-                  destination_dir: ${{ steps.destinationFolder.outputs.value }} #-${{ env.LAST_COMMIT_SHA }}
+                  destination_dir: ${{ steps.destinationFolder.outputs.value }}
                   publish_branch: staging
                   keep_files: true
 
@@ -197,38 +95,14 @@ jobs:
               with:
                   ref: staging
 
-            # - name: Print info
-            #   run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
-
-            #- name: Specify branch name
-            #  run: echo "BRANCH_NAME=$(echo ${{ github.head_ref }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
             - name: Define branch name
-              run: echo "BRANCH_NAME=$(echo ${{ github.event.head_commit.message }}#*${{ github.event.repository.name }})" >> $GITHUB_ENV
+              run: |
+                  formatted_commit=$(echo "${{ github.event.head_commit.message }}" | sed -E ':a;N;$!ba;s/\r{0,1}\n/\_UNIQUE_CHAR_/g')
+                  branch_name=$(sed -rn 's%^.*${{ github.repository_owner }}\/([A\-z\/\-]+)_UNIQUE_CHAR_.*$%\1%p'<<<"$formatted_commit")
+                  echo "BRANCH_NAME=$(echo "$branch_name")" >> $GITHUB_ENV
 
-
-            #- name: Setup Environment (PR)
-            #  if: ${{ github.event_name == 'pull_request' }}
-            #  shell: bash
-            #  run: |
-            #      echo "LAST_COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> ${GITHUB_ENV}
-
-            #-   name: Setup Environment (Push)
-            #    if: ${{ github.event_name == 'push' }}
-            #    shell: bash
-            #    run: |
-            #        echo "LAST_COMMIT_SHA=${GITHUB_SHA}" >> ${GITHUB_ENV}
-            # token=${text##* authentication_token = \'}
-
-            - name: Check
-              run: ls -a
-
-            - name: delete merged build folder
+            - name: Delete merged folder
               run: rm -rf ${{ env.BRANCH_NAME }}
-              # run: find . -name '*-${{ env.BRANCH_NAME }}' -exec rm -rf {} +
-
-
-            - name: Check
-              run: ls -a
 
             - name: commit success
               run: |
