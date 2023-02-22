@@ -50,9 +50,8 @@ jobs:
 
             - name: Define branch name
               run: |
-                  formatted_commit=$(echo "${{ github.event.head_commit.message }}" | sed -E ':a;N;$!ba;s/\r{0,1}\n/\_UNIQUE_CHAR_/g')
+                  formatted_commit=$(echo "Merge pull request #50 from github/wow/sleshi/testint-this\n\nhelloвапвап" | sed -E ':a;N;$!ba;s/\r{0,1}\n/\_UNIQUE_CHAR_/g')
                   branch_name=$(sed -rn 's%^.*github\/([A\-z\/\-]+)_UNIQUE_CHAR_.*$%\1%p'<<<"$formatted_commit")
-                  echo "$branch_name"
                   echo "BRANCH_NAME=$(echo "$branch_name")" >> $GITHUB_ENV
                   
                   
