@@ -44,6 +44,8 @@ export const App = () => {
 			<p>THIS WORKS!</p>
 			<p>THIS WORKS!</p>
 
+			<p> Hello there! </p>
+
 
 			<p>peace</p>
 
