@@ -110,7 +110,8 @@ jobs:
               run: |
                   formatted_commit=$(echo "${{ github.event.head_commit.message }}" | sed -E ':a;N;$!ba;s/\r{0,1}\n/\_UNIQUE_CHAR_/g')
                   branch_name=$(sed -rn 's%^.*${{ github.repository_owner }}\/([A\-z\/\-]+)_UNIQUE_CHAR_.*$%\1%p'<<<"$formatted_commit")
-                  echo "BRANCH_NAME=$(echo "$branch_name")" >> $GITHUB_ENV
+                  folder_name=$(sed -r 's/[/]+/-/g'<<<"$branch_name")
+                  echo "FOLDER_NAME=$(echo "$folder_name")" >> $GITHUB_ENV
 
             - name: DEBUG
               run: echo $BRANCH_NAME
@@ -119,7 +120,7 @@ jobs:
                 run: ls -a
 
             - name: Delete merged folder
-              run: rm -rf ${{ env.BRANCH_NAME }}
+              run: rm -rf ${{ env.FOLDER_NAME }}
 
             -   name: Check again
                 run: ls -a
