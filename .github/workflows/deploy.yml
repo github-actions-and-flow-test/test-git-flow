@@ -57,8 +57,11 @@ jobs:
                   
                   
 
-            - name: test
+            - name: with colons
               run: echo "$BRANCH_NAME"
+
+            - name: without colons
+              run: echo $BRANCH_NAME
 
 
 
