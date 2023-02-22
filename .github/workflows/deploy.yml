@@ -46,7 +46,7 @@ jobs:
             # ${{ github.event.head_commit.message }}
             - name: Define branch name
               run: |
-                  branch_name=$(sed -rn 's%^.*github\/([A\-z\/\-]+)\\n\\n.*$%\1%p' <<< ${{ github.event.head_commit.message }})
+                  branch_name=$(sed -rn 's%^.*github\/([A\-z\/\-]+)\\n\\n.*$%\1%p'<<< "${{ github.event.head_commit.message }}")
                   echo "BRANCH_NAME=$(echo "$branch_name")" >> $GITHUB_ENV
 
             - name: test
