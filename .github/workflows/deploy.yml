@@ -43,11 +43,10 @@ jobs:
             # commit_message_without_spaces=${commit_message//[[:blank:]]/}
             # commit_message="Merge pull request #50 from github/wow/sleshi/testint-this\n\nhelloвапвап";
             # echo $(sed -rn 's%^.*github\/([A\-z\/\-]+)\\n\\n.*$%\1%p'<<<"$commit_message")
-
+            # ${{ github.event.head_commit.message }}
             - name: Define branch name
               run: |
-                  commit_message=${{ github.event.head_commit.message }}
-                  branch_name=$(sed -rn 's%^.*github\/([A\-z\/\-]+)\\n\\n.*$%\1%p'<<<"$commit_message")
+                  branch_name=$(sed -rn 's%^.*github\/([A\-z\/\-]+)\\n\\n.*$%\1%p'<<<"${{ github.event.head_commit.message }}")
                   echo "BRANCH_NAME=$(echo "branch_name")" >> $GITHUB_ENV
 
             - name: test
