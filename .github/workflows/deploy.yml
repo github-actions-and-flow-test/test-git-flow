@@ -56,7 +56,7 @@ jobs:
                   commit_message="${{ github.event.head_commit.message }}"
                   formatted_commit=$(echo "$commit_message" | sed -E ':a;N;$!ba;s/\r{0,1}\n/\_UNIQUE_CHAR_/g')
                   branch_name=$(sed -rn 's%^.*github\/([A\-z\/\-]+)_UNIQUE_CHAR_.*$%\1%p'<<<"$formatted_commit")
-
+                  echo "$commit_message"
                   echo "BRANCH_NAME=$(echo "$branch_name")"
                   
                   
