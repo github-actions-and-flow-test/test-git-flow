@@ -101,6 +101,9 @@ jobs:
                   branch_name=$(sed -rn 's%^.*${{ github.repository_owner }}\/([A\-z\/\-]+)_UNIQUE_CHAR_.*$%\1%p'<<<"$formatted_commit")
                   echo "BRANCH_NAME=$(echo "$branch_name")" >> $GITHUB_ENV
 
+            - name: DEBUG
+              run: echo $BRANCH_NAME
+
             - name: Delete merged folder
               run: rm -rf ${{ env.BRANCH_NAME }}
 
