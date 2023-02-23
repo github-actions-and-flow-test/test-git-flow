@@ -1,7 +1,5 @@
 on:
-    pull_request:
-        types: [opened]
-    issue_comment:
+    pull_request_review_comment:
         types: [created]
 
 
