@@ -23,34 +23,18 @@ jobs:
         name: Build and Test
         runs-on: ubuntu-latest
         steps:
-            -   name: Checkout repo 
+            -   name: Checkout repo
                 uses: actions/checkout@v3
-                
+
             -   name: Dump GitHub context
                 env:
                     GITHUB_CONTEXT: ${{ toJSON(github) }}
                 run: echo "$GITHUB_CONTEXT"
 
-            -   name: Checkout repo 
-                uses: actions/checkout@v3
-                
             -   name: Dump GitHub context again
                 env:
                     GITHUB_CONTEXT_TWO: ${{ toJSON(github) }}
-                run: echo "$GITHUB_CONTEXT_TWO"    
-                
-            -   name: Define repo branch
-                uses: haya14busa/action-cond@v1
-                id: repositoryBranch
-                with:
-                    cond: ${{ !github.event.client_payload.ref }}
-                    if_true: 'main'
-                    if_false: ${{ github.event.client_payload.ref }}
-
-            -   name: Checkout repo if called from PR
-                uses: actions/checkout@v3
-                with:
-                    ref: ${{ steps.repositoryBranch.outputs.value }}
+                run: echo "$GITHUB_CONTEXT_TWO"
 
             -   name: Get branch name
                 run: |

@@ -12,13 +12,13 @@ jobs:
     rebuild:
         runs-on: ubuntu-latest
         steps:
-            -   name: Checkout repo 
+            -   name: Checkout repo
                 uses: actions/checkout@v3
-                
+
             -   name: Dump GitHub context
                 env:
                     GITHUB_CONTEXT_TWO: ${{ toJSON(github) }}
-                run: echo "$GITHUB_CONTEXT_TWO"  
+                run: echo "$GITHUB_CONTEXT_TWO"
 
             -   name: Check message
                 uses: khan/pull-request-comment-trigger@v1.1.0
