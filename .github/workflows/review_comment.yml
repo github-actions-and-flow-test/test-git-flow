@@ -12,7 +12,6 @@ jobs:
     rebuild:
         runs-on: ubuntu-latest
         steps:
-
             -   name: Check message
                 uses: khan/pull-request-comment-trigger@v1.1.0
                 id: check
@@ -21,9 +20,10 @@ jobs:
                     reaction: rocket
                 env:
                     GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-
+# ref: ${{ github.event.client_payload.ref }}
             -   name: Rebuild previous
                 if: steps.check.outputs.triggered == 'true'
                 uses: peter-evans/repository-dispatch@v2
                 with:
                     event-type: rebuild
+                    client-payload: '{"ref": "${{ github.ref }}""}'
