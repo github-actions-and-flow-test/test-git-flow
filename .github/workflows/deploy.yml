@@ -28,8 +28,23 @@ jobs:
                     GITHUB_CONTEXT: ${{ toJSON(github) }}
                 run: echo "$GITHUB_CONTEXT"
 
-            -   name: Checkout repo
+            -   name: Define repo branch
+                uses: haya14busa/action-cond@v1
+                id: repositoryBranch
+                with:
+                    cond: ${{ !github.event.client_payload.ref }}
+                    if_true: 'main'
+                    if_false: ${{ github.event.client_payload.ref }}
+
+            -   name: Checkout repo if called from PR
                 uses: actions/checkout@v3
+                with:
+                    ref: ${{ steps.repositoryBranch.outputs.value }}
+
+            -   name: Get branch name
+                run: |
+                    echo ${{ github.head_ref }}
+                    echo ${{ github.ref_name }}
 
             -   name: Setup Node
                 uses: actions/setup-node@v3
