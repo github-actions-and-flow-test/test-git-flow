@@ -24,7 +24,6 @@ jobs:
 
             -   name: Rebuild previous
                 if: steps.check.outputs.triggered == 'true'
-                uses: peter-evans/repository-dispatch@v1
+                uses: peter-evans/repository-dispatch@v2
                 with:
-                    token: ${{ secrets.PAT }}
                     event-type: rebuild
