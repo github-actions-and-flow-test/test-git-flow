@@ -1,6 +1,7 @@
 name: Build and Deploy to gh-pages.
 
 on:
+
     push:
         branches:
             - 'main'
