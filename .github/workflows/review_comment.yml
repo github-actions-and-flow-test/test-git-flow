@@ -12,6 +12,11 @@ jobs:
     rebuild:
         runs-on: ubuntu-latest
         steps:
+            -   name: Dump GitHub context
+                env:
+                    GITHUB_CONTEXT: ${{ toJSON(github) }}
+                run: echo "$GITHUB_CONTEXT"
+
             -   name: Check message
                 uses: khan/pull-request-comment-trigger@v1.1.0
                 id: check
