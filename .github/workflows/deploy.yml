@@ -1,8 +1,8 @@
 name: Build and Deploy to gh-pages.
 
 on:
-    # repository_dispatch:
-    #     types: [ rebuild ]
+    repository_dispatch:
+        types: [ rebuild ]
 
     push:
         branches:
@@ -31,13 +31,10 @@ jobs:
                     GITHUB_CONTEXT: ${{ toJSON(github) }}
                 run: echo "$GITHUB_CONTEXT"
 
-            # -   name: Define repo branch
-            #     uses: haya14busa/action-cond@v1
-            #     id: repositoryBranch
-            #     with:
-            #         cond: ${{ !github.event.client_payload.ref }}
-            #         if_true: 'main'
-            #         if_false: ${{ github.event.client_payload.ref }}
+            -   name: Dump GitHub context again
+                env:
+                    GITHUB_CONTEXT_TWO: ${{ toJSON(github) }}
+                run: echo "$GITHUB_CONTEXT_TWO"
 
             -   name: Get branch name
                 run: |
@@ -81,8 +78,8 @@ jobs:
             -   name: Download artifact
                 uses: actions/download-artifact@master
                 with:
-                    name: production-build
-                    path: .
+                     name: production-build
+                     path: .
 
             -   name: Specify branch name
                 run: echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
