@@ -1,8 +1,8 @@
 name: Build and Deploy to gh-pages.
 
 on:
-    repository_dispatch:
-        types: [ rebuild ]
+    # repository_dispatch:
+    #     types: [ rebuild ]
 
     push:
         branches:
@@ -17,36 +17,28 @@ on:
 concurrency:
     group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
     cancel-in-progress: true
-#                            -   name: Define destination folder
-#                            uses: haya14busa/action-cond@v1
-#                            id: destinationFolder
-#                            with:
-#                                cond: ${{ github.ref == 'refs/heads/main' }}
-#                                if_true: '.'
-#                                if_false: ${{ env.BRANCH_NAME }}
-#    ref: ${{ github.event.client_payload.ref }}
+
 jobs:
     build:
         name: Build and Test
         runs-on: ubuntu-latest
         steps:
+            -   name: Checkout repo
+                uses: actions/checkout@v3
+
             -   name: Dump GitHub context
                 env:
                     GITHUB_CONTEXT: ${{ toJSON(github) }}
                 run: echo "$GITHUB_CONTEXT"
 
-            #-   name: Define repo branch
-            #    uses: haya14busa/action-cond@v1
-            #    id: repositoryBranch
-            #    with:
-            #        cond: ${{ !github.event.client_payload.ref }}
-            #        if_true: '.'
-            #        if_false: ${{ env.BRANCH_NAME }}
-#
-            -   name: Checkout repo if called from PR
-                uses: actions/checkout@v3
-                # with:
-                #     ref:
+            # -   name: Define repo branch
+            #     uses: haya14busa/action-cond@v1
+            #     id: repositoryBranch
+            #     with:
+            #         cond: ${{ !github.event.client_payload.ref }}
+            #         if_true: 'main'
+            #         if_false: ${{ github.event.client_payload.ref }}
+
             -   name: Get branch name
                 run: |
                     echo ${{ github.head_ref }}
@@ -89,8 +81,8 @@ jobs:
             -   name: Download artifact
                 uses: actions/download-artifact@master
                 with:
-                     name: production-build
-                     path: .
+                    name: production-build
+                    path: .
 
             -   name: Specify branch name
                 run: echo "BRANCH_NAME=$(echo ${{ github.head_ref || github.ref_name }} | sed -r 's/[/]+/-/g')" >> $GITHUB_ENV
