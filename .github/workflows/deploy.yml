@@ -23,11 +23,22 @@ jobs:
         name: Build and Test
         runs-on: ubuntu-latest
         steps:
+            -   name: Checkout repo 
+                uses: actions/checkout@v3
+                
             -   name: Dump GitHub context
                 env:
                     GITHUB_CONTEXT: ${{ toJSON(github) }}
                 run: echo "$GITHUB_CONTEXT"
 
+            -   name: Checkout repo 
+                uses: actions/checkout@v3
+                
+            -   name: Dump GitHub context again
+                env:
+                    GITHUB_CONTEXT_TWO: ${{ toJSON(github) }}
+                run: echo "$GITHUB_CONTEXT_TWO"    
+                
             -   name: Define repo branch
                 uses: haya14busa/action-cond@v1
                 id: repositoryBranch
