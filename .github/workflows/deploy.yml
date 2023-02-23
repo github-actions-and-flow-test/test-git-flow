@@ -1,6 +1,8 @@
 name: Build and Deploy to gh-pages.
 
 on:
+    repository_dispatch:
+        types: [ rebuild ]
 
     push:
         branches:
@@ -15,7 +17,14 @@ on:
 concurrency:
     group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
     cancel-in-progress: true
-
+#                            -   name: Define destination folder
+#                            uses: haya14busa/action-cond@v1
+#                            id: destinationFolder
+#                            with:
+#                                cond: ${{ github.ref == 'refs/heads/main' }}
+#                                if_true: '.'
+#                                if_false: ${{ env.BRANCH_NAME }}
+#    ref: ${{ github.event.client_payload.ref }}
 jobs:
     build:
         name: Build and Test
@@ -26,8 +35,22 @@ jobs:
                     GITHUB_CONTEXT: ${{ toJSON(github) }}
                 run: echo "$GITHUB_CONTEXT"
 
-            -   name: Checkout repo
-                uses: actions/checkout@v3
+            #-   name: Define repo branch
+            #    uses: haya14busa/action-cond@v1
+            #    id: repositoryBranch
+            #    with:
+            #        cond: ${{ !github.event.client_payload.ref }}
+            #        if_true: '.'
+            #        if_false: ${{ env.BRANCH_NAME }}
+#
+            #-   name: Checkout repo if called from PR
+            #    uses: actions/checkout@v3
+            #    with:
+            #        ref:
+            -   name: Get branch name
+                run: |
+                    echo ${{ github.head_ref }}
+                    echo ${{ github.ref_name }}
 
             -   name: Setup Node
                 uses: actions/setup-node@v3
