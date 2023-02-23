@@ -12,15 +12,10 @@ jobs:
     rebuild:
         runs-on: ubuntu-latest
         steps:
-            -   name: Dump GitHub context
-                env:
-                    GITHUB_CONTEXT: ${{ toJSON(github) }}
-                run: echo "$GITHUB_CONTEXT"
-
             -   name: Checkout repo 
                 uses: actions/checkout@v3
                 
-            -   name: Dump GitHub context again
+            -   name: Dump GitHub context
                 env:
                     GITHUB_CONTEXT_TWO: ${{ toJSON(github) }}
                 run: echo "$GITHUB_CONTEXT_TWO"  
@@ -33,7 +28,7 @@ jobs:
                     reaction: rocket
                 env:
                     GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-# ref: ${{ github.event.client_payload.ref }}
+
             -   name: Rebuild previous
                 if: steps.check.outputs.triggered == 'true'
                 uses: peter-evans/repository-dispatch@v2
