@@ -43,10 +43,10 @@ jobs:
             #        if_true: '.'
             #        if_false: ${{ env.BRANCH_NAME }}
 #
-            #-   name: Checkout repo if called from PR
-            #    uses: actions/checkout@v3
-            #    with:
-            #        ref:
+            -   name: Checkout repo if called from PR
+                uses: actions/checkout@v3
+                # with:
+                #     ref:
             -   name: Get branch name
                 run: |
                     echo ${{ github.head_ref }}
