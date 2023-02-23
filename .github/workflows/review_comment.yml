@@ -17,6 +17,14 @@ jobs:
                     GITHUB_CONTEXT: ${{ toJSON(github) }}
                 run: echo "$GITHUB_CONTEXT"
 
+            -   name: Checkout repo 
+                uses: actions/checkout@v3
+                
+            -   name: Dump GitHub context again
+                env:
+                    GITHUB_CONTEXT_TWO: ${{ toJSON(github) }}
+                run: echo "$GITHUB_CONTEXT_TWO"  
+
             -   name: Check message
                 uses: khan/pull-request-comment-trigger@v1.1.0
                 id: check
